@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
-
+    public TextMeshProUGUI countText;
+    public GameObject winTextObject;
+    public int cubesQty; 
     private Rigidbody rb;
     private int count;
 
@@ -16,11 +19,22 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        SetCountText();
+        winTextObject.SetActive(false);
     }
 
     private void Update()
     {
         
+    }
+
+    private void SetCountText()
+    {
+        countText.text = "Count: " + count.ToString();
+        if(count >= cubesQty)
+        {
+            winTextObject.SetActive(true);
+        }
     }
 
     private void FixedUpdate()
@@ -42,6 +56,7 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count++;
+            SetCountText();
         }
     }
 }
